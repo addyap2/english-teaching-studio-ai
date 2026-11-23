@@ -132,8 +132,8 @@ export function stageClock(minutes: number[]): string[] {
 /** Pulls the first JSON object out of a model reply (handles ```json fences and chatter). */
 export function extractJson(raw: string): unknown {
   const trimmed = raw.trim();
-  const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  const candidate = fenced ? fenced[1] : trimmed;
+  // Drop every code fence, so a reply pasted in two parts ("continue") joins up.
+  const candidate = trimmed.replace(/```(?:json)?/gi, '');
   const start = candidate.indexOf('{');
   const end = candidate.lastIndexOf('}');
   if (start === -1 || end <= start) throw new Error('No JSON object found in the response.');

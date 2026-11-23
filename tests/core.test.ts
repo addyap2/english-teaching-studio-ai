@@ -78,6 +78,8 @@ test('JSON is extracted from fenced or chatty replies, including trailing commas
   assert.deepEqual(extractJson('Here you go:\n```json\n{"a": [1, 2,],}\n```\nEnjoy!'), { a: [1, 2] });
   assert.deepEqual(extractJson('{"b": "x"}'), { b: 'x' });
   assert.throws(() => extractJson('no json here'));
+  // A long reply continued in a second Claude message, pasted together.
+  assert.deepEqual(extractJson('```json\n{"a": [1,\n```\n\n```json\n 2]}\n```'), { a: [1, 2] });
 });
 
 test('lesson parsing reports precise problems', () => {
