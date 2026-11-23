@@ -1,0 +1,1 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';test('demo lesson exists in client',()=>{const s=readFileSync(new URL('../app/page.tsx',import.meta.url),'utf8');assert.match(s,/Load offline sample/);assert.match(s,/General English/)});
