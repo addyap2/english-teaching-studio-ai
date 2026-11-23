@@ -1,0 +1,30 @@
+{
+  "name": "english-teaching-studio-ai",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts tests/*.test.mjs",
+    "test:quality": "node --experimental-strip-types --test tests/quality.test.mjs tests/demo.test.mjs",
+    "test:offline": "node --experimental-strip-types --test tests/quality.test.mjs tests/demo.test.mjs"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "openai": "^5.0.0",
+    "zod": "^4.0.0",
+    "docx": "^9.5.1",
+    "jspdf": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.8.0",
+    "tsx": "^4.20.0"
+  }
+}
