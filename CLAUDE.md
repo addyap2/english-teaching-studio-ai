@@ -1,14 +1,18 @@
-# Claude Code handover
+# English Teaching Studio — notes for Claude Code
 
-Repository: addyap2/english-teaching-studio-ai
+Private teaching-material studio for Antony Addy (native British English trainer, adult learners in France). General English is the default context; never add luxury retail. CEFR A0–C2 plus mixed groups. Natural British English; French support where useful.
 
-Objective: professional British English lesson generator for adult learners in France, default General English. No Luxury Retail. Bilingual EN/FR, CEFR A0–C2, varied vocabulary and MCQs, oral activities, Kahoot and print/PDF.
+Stack: Next.js 15 (App Router), TypeScript, Zod 4, `@anthropic-ai/sdk`, `docx`, `jszip`. Deployed on Vercel. **No database, no Supabase, no accounts** — lessons/templates live in localStorage (`lib/storage.ts`). Don't add paid infrastructure without asking.
 
-Stack: Next.js 15, TypeScript, OpenAI API, Zod, Vercel. No database or Supabase. Do not introduce paid infrastructure.
+## Rules that the code enforces (keep them)
+- `lib/normalise.ts` runs on every generated/imported lesson: plan timings are refitted to the exact duration, multiple-choice correct positions are balanced (`balancedPositions`), true/false items get `correctIndex`.
+- `lib/learner.ts` strips answers, explanations, model answers, teacher tips, plan and notes. Learner view and learner exports must be built from `toLearnerLesson`, never by hiding with CSS.
+- Exercises have at least 10 items (`settingsSchema.questionsPerExercise` min 10).
+- Kahoot export follows Kahoot's template (headers row 8, data from row 9, columns B–H; question ≤120 chars, answers ≤75).
+- Prompts live in `lib/prompt.ts` and are shared by the API and the Claude.ai copy/paste route.
+- API keys are server-only. Production refuses generation without `APP_ACCESS_KEY`.
 
-Priority:
-1. npm install, npm run typecheck, npm run build, and repair any errors.
-2. Ensure generate API and teacher/learner UI work end-to-end.
-3. Add DOCX/PDF and Kahoot CSV exports, editing, templates, and lesson storage without a database.
-4. Add test coverage, accessibility, mobile QA and Vercel deployment.
-5. Never commit API keys or secrets. Never claim untested features are complete.
+## Commands
+`npm run dev` · `npm run typecheck` · `npm test` · `npm run build` · `npm run check` (all). CI (`.github/workflows/quality.yml`) runs `npm ci`, typecheck, tests and build.
+
+Never claim a feature works without running it. No real API key is available in development; the AI route is tested with injected fake completers (`tests/api.test.ts`).
