@@ -709,6 +709,10 @@ code {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.1rem;
 }
+.routes-single {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
 .route {
   display: flex;
   flex-direction: column;

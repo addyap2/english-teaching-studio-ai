@@ -1,11 +1,11 @@
 # Deployment checklist
 
-- [ ] `npm run check` passes locally (typecheck, tests, build); CI is green on `main`.
-- [ ] Vercel project imported from `addyap2/english-teaching-studio-ai` (Next.js preset).
-- [ ] `APP_ACCESS_KEY` set in Vercel (long passphrase) — required for one-click generation in production.
-- [ ] Optional: `ANTHROPIC_API_KEY` set, with credit on the Anthropic console account.
-- [ ] Optional: `ANTHROPIC_MODEL` if you want a cheaper model than the default `claude-opus-5-5`.
-- [ ] Redeploy after changing environment variables.
-- [ ] On the live site: Generate step shows "Generate with the AI API" as available; generate one lesson; check timings, answers and learner view.
+The studio is deployed on Vercel (Hobby, free) at https://english-teaching-studio-ai.vercel.app and redeploys on every push to `main`. No environment variables are required.
+
+- [ ] `npm run check` passes locally; CI is green on `main`.
+- [ ] On the live site: Setup → Generate → copy the prompt into claude.ai → paste the reply → Import lesson.
+- [ ] Check timings, answers and the learner version.
 - [ ] Export a learner PDF, a Word file and a Kahoot .xlsx; import the .xlsx into Kahoot once to confirm.
 - [ ] Back up the library (Library → Back up library) from time to time.
+
+Optional and paid (not set up): one-click generation needs `ANTHROPIC_API_KEY` and `APP_ACCESS_KEY` in Vercel — see `.env.example`.

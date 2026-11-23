@@ -2,7 +2,7 @@
 
 Private teaching-material studio for Antony Addy (native British English trainer, adult learners in France). General English is the default context; never add luxury retail. CEFR A0–C2 plus mixed groups. Natural British English; French support where useful.
 
-Stack: Next.js 15 (App Router), TypeScript, Zod 4, `@anthropic-ai/sdk`, `docx`, `jszip`. Deployed on Vercel. **No database, no Supabase, no accounts** — lessons/templates live in localStorage (`lib/storage.ts`). Don't add paid infrastructure without asking.
+Stack: Next.js 15 (App Router), TypeScript, Zod 4, `@anthropic-ai/sdk`, `docx`, `jszip`. Deployed on Vercel. **No database, no Supabase, no accounts** — lessons/templates live in localStorage (`lib/storage.ts`). Don't add paid infrastructure without asking. **The owner does not want paid AI keys**: the main generation route is copy/paste through claude.ai (Claude Pro). The API route stays as optional code but must never be required.
 
 ## Rules that the code enforces (keep them)
 - `lib/normalise.ts` runs on every generated/imported lesson: plan timings are refitted to the exact duration, multiple-choice correct positions are balanced (`balancedPositions`), true/false items get `correctIndex`.

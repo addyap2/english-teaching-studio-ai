@@ -244,7 +244,10 @@ export function Studio() {
 
         {step === 'generate' && (
           <>
-            <Intro title="Generate" text="Write the material with the AI API in one click, or for free through your Claude.ai subscription." />
+            <Intro
+              title="Generate"
+              text={status?.aiConfigured ? 'Write the material in one click, or through your Claude.ai subscription.' : 'Claude writes the material in your own Claude.ai account — no API key, nothing extra to pay.'}
+            />
             <GenerateStep
               settings={settings}
               status={status}
@@ -489,7 +492,7 @@ function RegenerateDialog(props: {
         </div>
       ) : (
         <>
-          <p className="muted small">No API key on the server: copy the prompt into Claude.ai and paste the reply here.</p>
+          <p className="muted small">Copy the prompt into a new Claude.ai chat, then paste Claude’s reply here.</p>
           <div className="btn-row">
             <button type="button" className="btn btn-secondary" onClick={copy}>
               {copied ? '✓ Copied' : 'Copy prompt'}

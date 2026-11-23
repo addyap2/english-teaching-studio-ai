@@ -46,6 +46,8 @@ export function GenerateStep({ settings, status, accessKey, onAccessKey, busy, e
   const [importError, setImportError] = useState('');
   const [copied, setCopied] = useState(false);
   const prompt = buildManualPrompt(settings);
+  // One-click generation only appears if the server has an API key; the free Claude.ai route is always there.
+  const ai = Boolean(status?.aiConfigured);
 
   async function copyPrompt() {
     try {
@@ -90,13 +92,12 @@ export function GenerateStep({ settings, status, accessKey, onAccessKey, busy, e
         </button>
       </div>
 
-      <div className="routes">
+      <div className={`routes${ai ? '' : ' routes-single'}`}>
+        {ai && (
         <section className="panel route route-ai" aria-labelledby={`${id}-ai`}>
           <p className="kicker">Option 1 · One click</p>
           <h2 id={`${id}-ai`}>Generate with the AI API</h2>
-          {status === null ? (
-            <p className="muted">Checking the server…</p>
-          ) : status.aiConfigured ? (
+          {status && (
             <>
               <p className="muted">
                 Uses the server’s {status.provider === 'anthropic' ? 'Claude' : 'OpenAI'} API ({status.model}). A full lesson takes about one to three minutes.
@@ -129,15 +130,12 @@ export function GenerateStep({ settings, status, accessKey, onAccessKey, busy, e
                 </p>
               )}
             </>
-          ) : (
-            <p className="muted">
-              No API key is set on the server, so one-click generation is off. Use option 2 (free with your Claude Pro subscription), or see the README to add an <code>ANTHROPIC_API_KEY</code>.
-            </p>
           )}
         </section>
+        )}
 
         <section className="panel route route-manual" aria-labelledby={`${id}-manual`}>
-          <p className="kicker">Option 2 · No API key needed</p>
+          <p className="kicker">{ai ? 'Option 2 · No API key needed' : 'Free · uses your Claude subscription'}</p>
           <h2 id={`${id}-manual`}>Generate with Claude.ai</h2>
           <ol className="how">
             <li>
@@ -155,6 +153,9 @@ export function GenerateStep({ settings, status, accessKey, onAccessKey, busy, e
             </li>
             <li>Copy Claude’s whole reply and paste it below.</li>
           </ol>
+          <p className="muted small">
+            If the reply stops part-way, type “continue” in Claude, then paste both parts together. Very long materials (40 questions, 4 hours) use more of your Claude usage allowance.
+          </p>
           <details className="prompt-preview">
             <summary>Show the prompt</summary>
             <pre tabIndex={0}>{prompt}</pre>
